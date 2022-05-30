@@ -188,51 +188,12 @@ def svm_model(personName):
     clf = GridSearchCV(SVC(kernel='rbf', class_weight='balanced'), param_grid, verbose=8)
     clf = clf.fit(X_train_pca, y_train)
 
-    # print("done in %0.3fs" % (time() - t0))
-
-    # print("\n")
-    # print("Best estimator found by grid search : ")
-    # print(clf.best_estimator_)
-
-    ###############################################################################
-    # Quantitative evaluation of the model quality on the test set
-    # print("\n")
-    # print("Predicting people's names on the test set")
-
     t0 = time()
     y_pred = clf.predict(X_test_pca)
 
     # calculate accuracy
     accuracy = accuracy_score(y_test, y_pred)
     print("\nModel accuracy is: ", accuracy)
-    
-    # predict probabilities for X_test using predict_proba
-    # probabilities = clf.predict_proba(X_test_pca)
-    # print("Probabilities is: ", probabilities)
-    
-    # select the probabilities for label 1.0
-    # y_proba = probabilities[:, 1]
-
-    # calculate false positive rate and true positive rate at different thresholds
-    # false_positive_rate, true_positive_rate, thresholds = roc_curve(y_test, y_proba, pos_label=1)
-
-    # calculate AUC
-    # roc_auc = auc(false_positive_rate, true_positive_rate)
-    
-    # plt.title('Receiver Operating Characteristic')
-    
-    # plot the false positive rate on the x axis and the true positive rate on the y axis
-    # roc_plot = plt.plot(false_positive_rate,
-    #                     true_positive_rate,
-    #                     label='AUC = {:0.2f}'.format(roc_auc))
-
-    # plt.legend(loc=0)
-    # plt.plot([0,1], [0,1], ls='--')
-    # plt.ylabel('True Positive Rate')
-    # plt.xlabel('False Positive Rate');
-    
-    # print(clf.score(X_test_pca,y_test))
-    # print("done in %0.3fs" % (time() - t0))
 
     print("\nClassification Report: ")
     print(classification_report(y_test, y_pred, target_names=target_names))
